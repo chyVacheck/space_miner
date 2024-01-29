@@ -249,7 +249,8 @@ export class Game {
         this.coordinates.x +
           this.speed.current * this.vector.x +
           (this.spaceShipSize - 1) <=
-        this.field.x
+          this.field.x &&
+        this.coordinates.x + this.speed.current * this.vector.x > 0
       )
         this.coordinates.x += this.speed.current * this.vector.x;
 
@@ -258,7 +259,8 @@ export class Game {
         this.coordinates.y +
           this.speed.current * this.vector.y +
           (this.spaceShipSize - 1) <=
-        this.field.y
+          this.field.y &&
+        this.coordinates.y + this.speed.current * this.vector.y > 0
       )
         this.coordinates.y += this.speed.current * this.vector.y;
     }
