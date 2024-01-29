@@ -52,6 +52,7 @@ export class Game {
       x: 0,
       y: 0,
     };
+    this.isMoving = false;
     this.statusBars = {
       energy: {
         increase: energy.increaseEnergy,
@@ -126,6 +127,7 @@ export class Game {
 
     //
     this.globalInterval = setInterval(() => {
+      this.isMoving = false;
       // do I really need this comment here ? :)
       this.move();
 
@@ -205,14 +207,15 @@ export class Game {
     // manage in or de crease energy we need
     switch (_value) {
       case 2:
-        this.decreaseEnergy();
+        if (this.isMoving) {
+          this.decreaseEnergy();
+        }
         break;
 
       case 1:
         break;
 
       case 0:
-        this.increaseEnergy();
         break;
 
       default:
@@ -226,14 +229,17 @@ export class Game {
     if (this.energy.current === this.energy.max) {
       // todo more then 30%
       this.energy.isCharged = true;
-    }
-    // min
-    else if (this.energy.current === this.energy.min) {
-      this.speed.current = 1;
+    } else {
+      if (!this.isMoving) this.increaseEnergy();
 
-      if (!this.notification.isShowing && this.energy.isCharged) {
-        this.alert(`Low energy\nNow speed is ${this.speed.current}`, 50);
-        this.energy.isCharged = false;
+      // min
+      if (this.energy.current === this.energy.min) {
+        this.speed.current = 1;
+
+        if (!this.notification.isShowing && this.energy.isCharged) {
+          this.alert(`Low energy\nNow speed is ${this.speed.current}`, 50);
+          this.energy.isCharged = false;
+        }
       }
     }
   }
@@ -250,9 +256,12 @@ export class Game {
           this.speed.current * this.vector.x +
           (this.spaceShipSize - 1) <=
           this.field.x &&
-        this.coordinates.x + this.speed.current * this.vector.x > 0
-      )
+        this.coordinates.x + this.speed.current * this.vector.x > 0 &&
+        Math.abs(this.vector.x) > 0
+      ) {
+        this.isMoving = true;
         this.coordinates.x += this.speed.current * this.vector.x;
+      }
 
       // ? Y
       if (
@@ -260,9 +269,12 @@ export class Game {
           this.speed.current * this.vector.y +
           (this.spaceShipSize - 1) <=
           this.field.y &&
-        this.coordinates.y + this.speed.current * this.vector.y > 0
-      )
+        this.coordinates.y + this.speed.current * this.vector.y > 0 &&
+        Math.abs(this.vector.y) > 0
+      ) {
+        this.isMoving = true;
         this.coordinates.y += this.speed.current * this.vector.y;
+      }
     }
   }
 
