@@ -1,0 +1,88 @@
+/* ? common */
+@import url(./styles/link.css);
+@import url(./styles/typographic.css);
+@import url(./styles/container.css);
+
+/* ? header */
+@import url(./styles/header.css);
+@import url(./styles/logo.css);
+@import url(./styles/navigation.css);
+
+/* ? main */
+@import url(./styles/main.css);
+
+/* ? field */
+@import url(./styles/field.css);
+
+/* ? space - ship */
+@import url(./styles/space-ship.css);
+
+/* ? how to play */
+@import url(./styles/how-to-play.css);
+@import url(./styles/key-buttons.css);
+
+/* ? footer */
+@import url(./styles/footer.css);
+@import url(./styles/button-start-play.css);
+@import url(./styles/status-bar.css);
+
+html,
+body {
+  width: 100%;
+  margin: 0;
+  background: var(--bg-main-color);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scroll-behavior: smooth;
+}
+
+#app {
+  /* ? max - width */
+  --max-width-container: 882px;
+
+  /* ? filed */
+  --field-width: 7px;
+  --field-height: 7px;
+
+  /* ? miner ship */
+  --miner-ship-width: 21px;
+  --miner-ship-height: 21px;
+
+  /* ? engine */
+  --engine-work-color: #f44345;
+  --engine-overload-color: #ffd731;
+
+  /* ? trace */
+  --trace-color: #f44345;
+
+  /* ? color */
+  --accent-main-color: #ea6b65;
+  --accent-secondary-color: #00bdc4; /* #248bf2 */
+
+  /* ? energy color */
+  --energy-empty-color: #f44345;
+  --energy-main-color: #ffd731;
+  --energy-full-color: #3ddc84;
+
+  /* ? fg color */
+  --fg-main-color: #404040;
+  --fg-light-color: #eeeeee;
+  --fg-accent-color: var(--accent-secondary-color);
+
+  /* ? bg color */
+  --bg-main-color: #211e34;
+  --bg-secondary-color: #060708;
+  --bg-popup-color: #d9d9d9;
+  --bg-status-bar-color: #b9b9b9;
+
+  /* ? border color */
+  --border-main-color: #c9ccd1;
+  --border-secondary-color: #e0e0e0;
+
+  /* ? opacity */
+  --opacity-hover: 0.8;
+  --opacity-active: 0.4;
+}

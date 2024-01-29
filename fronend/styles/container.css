@@ -1,0 +1,7 @@
+.container {
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 68px 0 64px;
+  width: 100%;
+  max-width: var(--max-width-container);
+}

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="%PUBLIC_URL%/../assets/icon/spaceSuit.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
+    <title>Space miner</title>
+  </head>
+  <body id="app">
+    <!-- ? header -->
+    <header class="header">
+      <div class="header__container">
+        <!-- ? logo -->
+        <div class="logo">
+          <img
+            id="header-logo"
+            class="logo__icon"
+            src="%PUBLIC_URL%/../assets/icon/spaceSuit.svg"
+            alt="logo"
+          />
+          <p
+            id="header-notification-text"
+            class="logo__text text_size_small text notification"
+          >
+            Here will be notification
+          </p>
+        </div>
+
+        <!-- ? navigation -->
+        <nav class="navigation">
+          <ul class="navigation__list">
+            <!-- ? how to play -->
+            <li class="navigation__item">
+              <a
+                href="#how-to-play"
+                class="navigation__link link text text_size_big"
+                >How to play</a
+              >
+            </li>
+
+            <!-- ? settings -->
+            <!-- <li class="navigation__item">
+              <a
+                href="#settings"
+                class="navigation__link link text text_size_big"
+                >Settings</a
+              >
+            </li> -->
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ? main -->
+    <main class="main">
+      <!-- how to play -->
+      <section id="how-to-play" class="container how-to-play">
+        <!-- ? header -->
+        <div class="how-to-play__header">
+          <h2 class="first-title how-to-play__title">How to play</h2>
+        </div>
+
+        <!-- ? body -->
+        <div class="how-to-play__instruction">
+          <!-- Control -->
+          <div class="how-to-play__block how-to-play_sides_two">
+            <article class="key-buttons how-to-play__key-buttons">
+              <div
+                name="how-to-play-key-button"
+                data-key="q"
+                class="key-button"
+              >
+                <p class="key-button__letter text">q</p>
+              </div>
+              <div
+                name="how-to-play-key-button"
+                data-key="w"
+                class="key-button"
+              >
+                <p class="key-button__letter text">w</p>
+              </div>
+              <div
+                name="how-to-play-key-button"
+                data-key="e"
+                class="key-button"
+              >
+                <p class="key-button__letter text">e</p>
+              </div>
+              <div
+                name="how-to-play-key-button"
+                data-key="a"
+                class="key-button"
+              >
+                <p class="key-button__letter text">a</p>
+              </div>
+              <div
+                name="how-to-play-key-button"
+                data-key="s"
+                class="key-button"
+              >
+                <p class="key-button__letter text">s</p>
+              </div>
+              <div
+                name="how-to-play-key-button"
+                data-key="d"
+                class="key-button"
+              >
+                <p class="key-button__letter text">d</p>
+              </div>
+            </article>
+
+            <div>
+              <h4 class="second-title how-to-play__subtitle text_color_accent">
+                Control:
+              </h4>
+
+              <p class="text">
+                The essence of gaming lies in control. In this game,
+                control—specifically, issuing commands to the ship's pilot—is
+                achieved through a concise set of buttons. To set the direction
+                vector of movement, use either
+                <span class="how-to-play__key-letter">A</span>,
+                <span class="how-to-play__key-letter">W</span>,
+                <span class="how-to-play__key-letter">S</span>,
+                <span class="how-to-play__key-letter">D</span>
+                or the arrow keys on the right side of the keyboard. However,
+                keep in mind that you cannot immediately switch to the opposite
+                direction; you must first come to a stop before navigating in
+                the opposite direction (for example, if you were moving upwards,
+                press the down button twice to move downwards). To decrease or
+                increase speed, use
+                <span class="how-to-play__key-letter">Q</span> and
+                <span class="how-to-play__key-letter">E</span>, respectively.
+                All the buttons required for game play are visible on the left
+                (try clicking on them with the mouse or using the corresponding
+                keyboard keys).
+              </p>
+            </div>
+          </div>
+          <!-- Main Objective -->
+          <div class="how-to-play__block">
+            <div>
+              <h4 class="second-title how-to-play__subtitle text_color_accent">
+                Main Objective:
+              </h4>
+              <p class="text">
+                The goal or main objective of the game is to evade asteroids and
+                meteoroids hurtling towards the player. To achieve this,
+                maneuver through the cosmic playing field—space—to avoid
+                collisions with celestial bodies.
+              </p>
+            </div>
+          </div>
+          <!-- Speed -->
+          <div class="how-to-play__block">
+            <div>
+              <h4 class="second-title how-to-play__subtitle text_color_accent">
+                Speed:
+              </h4>
+              <p class="text">
+                Simply drifting through space is not entertaining, especially at
+                a slow pace. Utilize the engine's overload (without harm) to
+                double your speed. However, be attentive and monitor the charge
+                level displayed at the <span>bottom</span>. In any case, don't
+                worry if it runs out; the pilot will assist you by automatically
+                reducing the speed to normal and will inform you accordingly.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- game -->
+      <section id="game" class="container">
+        <!-- ? game -->
+        <article class="field">
+          <!-- ? ship -->
+          <div hidden id="space-ship" class="space-ship">
+            <img
+              class="space-ship__img"
+              src="%PUBLIC_URL%/../assets/icon/spaceship.svg"
+              alt="miner ship"
+            />
+            <!-- ? engine -->
+            <div id="space-ship-engine" class="space-ship__engine"></div>
+            <!-- <div id="space-ship-traces" class="space-ship__traces"></div> -->
+          </div>
+        </article>
+      </section>
+
+      <!-- settings -->
+      <!-- <section id="settings" class="container settings">Settings</section> -->
+    </main>
+
+    <!-- ? footer -->
+    <footer class="footer">
+      <div class="footer__container">
+        <p class="text text_size_small">&copy; Space Miner</p>
+
+        <!-- button to start play -->
+        <button class="text button-start-play" id="button-start-play">
+          <p class="button-start-play__text text">Start play</p>
+        </button>
+
+        <!-- status bar of energy -->
+        <div id="footer-energy-status-bar" class="status-bar">
+          <img
+            src="%PUBLIC_URL%/../assets/icon/energy.svg"
+            alt="energy"
+            class="status-bar__icon"
+          />
+          <div id="footer-energy-status-bar-bar" class="status-bar__progress">
+            <div
+              class="status-bar__energy status-bar__energy_charge_full"
+            ></div>
+            <div
+              class="status-bar__energy status-bar__energy_charge_full"
+            ></div>
+            <div
+              class="status-bar__energy status-bar__energy_charge_full"
+            ></div>
+            <div
+              class="status-bar__energy status-bar__energy_charge_full"
+            ></div>
+            <div
+              class="status-bar__energy status-bar__energy_charge_full"
+            ></div>
+            <div
+              class="status-bar__energy status-bar__energy_charge_full"
+            ></div>
+            <div
+              class="status-bar__energy status-bar__energy_charge_full"
+            ></div>
+            <div
+              class="status-bar__energy status-bar__energy_charge_full"
+            ></div>
+            <div
+              class="status-bar__energy status-bar__energy_charge_full"
+            ></div>
+            <div
+              class="status-bar__energy status-bar__energy_charge_full"
+            ></div>
+          </div>
+        </div>
+
+        <a href="" class="text text_size_small link">GitHub</a>
+        <!-- todo add link to rep -->
+      </div>
+    </footer>
+
+    <!-- ! js -->
+    <script type="module" src="./src/index.js"></script>
+  </body>
+</html>

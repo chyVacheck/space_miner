@@ -1,0 +1,34 @@
+.first-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+  font-family: monospace;
+  letter-spacing: -0.4px;
+}
+
+.second-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: monospace;
+  letter-spacing: -0.35px;
+}
+
+.text {
+  margin: 0;
+  font-size: 16px;
+  font-family: "Courier New", Courier, monospace;
+  letter-spacing: -0.3px;
+
+  &.text_size_big {
+    font-size: 20px;
+  }
+
+  &.text_size_small {
+    font-size: 12px;
+  }
+}
+
+.text_color_accent {
+  color: var(--accent-secondary-color);
+}

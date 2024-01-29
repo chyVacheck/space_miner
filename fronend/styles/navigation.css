@@ -1,0 +1,32 @@
+.navigation {
+  display: flex;
+  box-sizing: border-box;
+  padding: 0 20px;
+}
+
+.navigation__list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+.navigation__item {
+  display: flex;
+  align-items: center;
+}
+
+.navigation__link {
+  height: fit-content;
+  text-shadow: 1px 1px var(--accent-main-color);
+  text-shadow: 1px 1px var(--fg-main-color);
+  width: 100%;
+  padding: 1px;
+  box-sizing: border-box;
+
+  &:hover {
+    padding: 2px 0 0 2px;
+    text-shadow: none;
+  }
+}
