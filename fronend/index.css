@@ -1,4 +1,5 @@
 /* ? common */
+@import url(./styles/animation.css);
 @import url(./styles/link.css);
 @import url(./styles/typographic.css);
 @import url(./styles/container.css);
@@ -13,9 +14,8 @@
 
 /* ? field */
 @import url(./styles/field.css);
-
-/* ? space - ship */
 @import url(./styles/space-ship.css);
+@import url(./styles/asteroid.css);
 
 /* ? how to play */
 @import url(./styles/how-to-play.css);

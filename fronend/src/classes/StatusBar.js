@@ -14,11 +14,13 @@ export class StatusBar {
     this.decrease = this.decrease.bind(this);
   }
 
-  increase() {
-    if (this.value.current < this.value.max) this.value.current++;
+  increase(value) {
+    if (this.value.current + value <= this.value.max)
+      this.value.current += value;
   }
 
-  decrease() {
-    if (this.value.current > this.value.min) this.value.current--;
+  decrease(value) {
+    if (this.value.current - value >= this.value.min)
+      this.value.current -= value;
   }
 }

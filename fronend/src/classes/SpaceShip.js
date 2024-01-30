@@ -1,11 +1,13 @@
 // ! modules
+// ? utils
+import { GAME_SETTING } from './../utils/constants.js';
 //
 //
 export class SpaceShip {
   constructor({
-    idElement = "miner-ship",
-    idEngine = "miner-ship-engine",
-    field = { x: 126, y: 96 },
+    idElement = 'miner-ship',
+    idEngine = 'miner-ship-engine',
+    field = { x: GAME_SETTING.FIELD.X, y: GAME_SETTING.FIELD.Y },
     shipSize = 3,
     speed = 0,
     coordinates,
@@ -29,7 +31,7 @@ export class SpaceShip {
       y: coordinates.y, // number of column
     };
 
-    console.log("miner is ready:", this);
+    console.log('miner is ready:', this);
     this.htmlElement.hidden = false;
     this.htmlElement.style.gridColumn = this.coordinates.x;
     this.htmlElement.style.gridRow = this.coordinates.y;
@@ -69,12 +71,12 @@ export class SpaceShip {
 
   checkEnginePower = () => {
     if (Math.abs(this.vector.x) + Math.abs(this.vector.y) > 1) {
-      console.log("powerful engine mode");
+      console.log('powerful engine mode');
 
-      this.htmlEngine.classList.add("miner-ship__engine_work_overload");
+      this.htmlEngine.classList.add('miner-ship__engine_work_overload');
     } else if (Math.abs(this.vector.x) + Math.abs(this.vector.y) === 1) {
       // console.log("usual engine mode");
-      this.htmlEngine.classList.remove("miner-ship__engine_work_overload");
+      this.htmlEngine.classList.remove('miner-ship__engine_work_overload');
     }
   };
 
@@ -82,15 +84,15 @@ export class SpaceShip {
   changeVectorView() {
     if (this.vector.x === 0 && this.vector.y !== 0) {
       if (this.vector.y > 0) {
-        this.htmlElement.style.rotate = "-180deg";
+        this.htmlElement.style.rotate = '-180deg';
       } else {
-        this.htmlElement.style.rotate = "0deg";
+        this.htmlElement.style.rotate = '0deg';
       }
     } else if (this.vector.x !== 0) {
       if (this.vector.x > 0) {
-        this.htmlElement.style.rotate = "90deg";
+        this.htmlElement.style.rotate = '90deg';
       } else {
-        this.htmlElement.style.rotate = "-90deg";
+        this.htmlElement.style.rotate = '-90deg';
       }
     }
   }

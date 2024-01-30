@@ -54,14 +54,14 @@ export class StatusBarEnergy extends StatusBar {
     });
   };
 
-  increaseEnergy() {
-    this.increase();
+  increaseEnergy(value) {
+    this.increase(value);
     this.calculateEnergy();
     return this.value.current;
   }
 
-  decreaseEnergy() {
-    this.decrease();
+  decreaseEnergy(value) {
+    this.decrease(value);
     this.calculateEnergy();
     return this.value.current;
   }

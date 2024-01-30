@@ -4,7 +4,11 @@ import { Game } from './classes/Game.js';
 import { StatusBarEnergy } from './classes/StatusBarEnergy.js';
 import { Notification } from './classes/Notification.js';
 
+//
+//
 // ? --- --- --- init all classes --- --- ---
+//
+//
 
 // notification
 const notification = new Notification({
@@ -130,6 +134,3 @@ keyButtons.forEach((button) => {
 // ? --- --- --- start --- --- ---
 //
 //
-
-// todo make a button start
-// setTimeout(game.start, 3_000);

@@ -174,7 +174,7 @@
       <!-- game -->
       <section id="game" class="container">
         <!-- ? game -->
-        <article class="field">
+        <article id="game-field" class="field">
           <!-- ? ship -->
           <div hidden id="space-ship" class="space-ship">
             <img
@@ -186,6 +186,14 @@
             <div id="space-ship-engine" class="space-ship__engine"></div>
             <!-- <div id="space-ship-traces" class="space-ship__traces"></div> -->
           </div>
+          <!-- ? asteroid -->
+          <template id="asteroid-template">
+            <img
+              class="asteroid__image"
+              alt="asteroid"
+              src="%PUBLIC_URL%/../assets/icon/asteroid.svg"
+            />
+          </template>
         </article>
       </section>
 
@@ -244,8 +252,11 @@
           </div>
         </div>
 
-        <a href="" class="text text_size_small link">GitHub</a>
-        <!-- todo add link to rep -->
+        <a
+          href="https://github.com/chyVacheck/space_miner"
+          class="text text_size_small link"
+          >GitHub</a
+        >
       </div>
     </footer>
 
