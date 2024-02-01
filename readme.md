@@ -1,23 +1,29 @@
 # Space miner
 
-## description
+# Release
 
-The game will be something like a snake, but the main character will not be a snake, but a spaceship, his goal will be to dodge space asteroids and meteors
+Current release version is v1.0.0
 
-## functionality
+All release you can look [here](https://github.com/chyVacheck/space_miner/releases)
+
+## Description
+
+Space Miner is an exhilarating arcade game where you take control of a spaceship and navigate through space, avoiding collisions with asteroids. In this thrilling cosmic adventure, you'll encounter diverse asteroids, each with unique speeds and energy consumption.
+
+## Functionality
 
 - [x] From the functionality will be the movement of the ship on the playing field
 - [x] In a random place on top of the playing field will appear asteroids and meteorites, which will fly down
 - [x] User can lose if collide with something in space
 
-## future updates
+## Future updates
 
-- [] Rewrite description in how-to-play screen
-- [] Make some popup for pause
-- [] Make some background animation
-- [] Make speedometer
+- [x] Rewrite description in how-to-play screen
+- [ ] Make some popup for pause
+- [ ] Make some background animation
+- [ ] Make speedometer
 
-## if have enough time
+## If have enough time
 
 - [x] Make energy storage functionality, for faster movement speeds
 - [ ] Make a functionality on the appearance of aliens that can fly in different directions at higher speeds than meteorites or asteroids.
