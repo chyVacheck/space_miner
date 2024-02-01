@@ -56,9 +56,8 @@ export class StatusBarEnergy extends StatusBar {
     });
   };
 
-  changeView() {
-    this.htmlElement.style.display =
-      this.htmlElement.style.display === 'none' ? '' : 'none';
+  changeView(boolean = this.htmlElement.style.display === 'none') {
+    this.htmlElement.style.display = boolean ? '' : 'none';
   }
 
   increaseEnergy(value) {

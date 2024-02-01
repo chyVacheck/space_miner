@@ -16,17 +16,18 @@ export class Game {
   // ! --- --- --- constructor --- --- ---÷
   constructor({
     gameOver,
+    mainButton,
     fieldId = 'game-field',
-    field = { x: 126, y: 96 },
-    coordinates = { x: 65, y: 70 },
     energy,
     notification,
     typeOfSpaceShip = 'MINER',
   }) {
     this.typeOfSpaceShip = typeOfSpaceShip;
     this.functionWhenGameOver = gameOver;
+    this.mainButton = mainButton;
     this.isPause = false;
     this.isGameOver = false;
+    this.isGameStart = false;
     this.score = 0;
     this.time = 1;
     this.tick = 10;
@@ -56,12 +57,12 @@ export class Game {
       'd',
     ];
     this.field = {
-      x: field.x,
-      y: field.y,
+      x: GAME_SETTING.FIELD.X,
+      y: GAME_SETTING.FIELD.Y,
     };
     this.coordinates = {
-      x: coordinates.x,
-      y: coordinates.y,
+      x: GAME_SETTING.SPACE_SHIP.COORDINATES.X,
+      y: GAME_SETTING.SPACE_SHIP.COORDINATES.Y,
     };
     this.speed = {
       min: GAME_SETTING.SPACE_SHIP[typeOfSpaceShip].SPEED.MIN,
@@ -74,12 +75,7 @@ export class Game {
     };
     this.isSpaceShipMoving = false;
     this.statusBars = {
-      energy: {
-        changeView: energy.changeView,
-        increase: energy.increaseEnergy,
-        decrease: energy.decreaseEnergy,
-        render: energy.renderEnergy,
-      },
+      energy: energy,
     };
 
     this.htmlField = document.getElementById(fieldId);
@@ -106,8 +102,10 @@ export class Game {
 
     // ? --- --- --- methods --- --- ---
     this.start = this.start.bind(this);
+    this.pause = this.pause.bind(this);
     this.render = this.renderAll.bind(this);
     this.gameOver = this.gameOver.bind(this);
+    this._initAll = this._initAll.bind(this);
     this.manageSpeed = this.manageSpeed.bind(this);
     this.manageEnergy = this.manageEnergy.bind(this);
     this.moveSpaceShip = this.moveSpaceShip.bind(this);
@@ -120,9 +118,6 @@ export class Game {
     this.handlerClickPilot = this.handlerClickPilot.bind(this);
     this._closeNotification = this.closeNotification.bind(this);
     this.startGlobalInterval = this.startGlobalInterval.bind(this);
-
-    // ! dev
-    window.createAsteroid = this.createAsteroid; // todo delete in release
   }
 
   // ! --- --- --- private function --- --- ---
@@ -140,21 +135,40 @@ export class Game {
     }, 3_500);
   }
 
-  // ! --- --- --- main function --- --- ---
-  start() {
+  _initAll() {
+    this.score = 0;
+    this.time = 1;
     this.isGameOver = false;
     this.isPause = false;
+    this.isGameStart = true;
+    this.vector = {
+      x: 0,
+      y: 0,
+    };
+    this.coordinates = {
+      x: GAME_SETTING.SPACE_SHIP.COORDINATES.X,
+      y: GAME_SETTING.SPACE_SHIP.COORDINATES.Y,
+    };
     this.energy.current = GAME_SETTING.ENERGY.VALUE.MAX;
-    this.statusBars.energy.changeView();
-    document.addEventListener('keyup', this.handlerKeyPress);
+    this.statusBars.energy.setValue(this.energy.current);
+    this.statusBars.energy.changeView(true);
+    this.speed.current =
+      GAME_SETTING.SPACE_SHIP[this.spaceShip.type].SPEED.INIT;
     this.notification.html.icon.addEventListener(
       'click',
       this.handlerClickPilot,
     );
+  }
+
+  // ! --- --- --- main function --- --- ---
+  start() {
+    document.addEventListener('keyup', this.handlerKeyPress);
 
     this._sayHello();
 
     this.createSpaceShip();
+
+    this._initAll();
 
     setTimeout(this.startGlobalInterval, 2_000);
   }
@@ -199,12 +213,37 @@ export class Game {
     }, this.tick);
   }
 
+  _check() {
+    console.log(208, 'function check');
+  }
+
   // just stop game for some time
   pause(bool = !this.isPause) {
-    this.isPause = bool;
-    this.asteroids.forEach((ast) => {
-      ast.htmlElement.classList.toggle('asteroid_animation-state_stop');
-    });
+    if (!this.isGameStart) return;
+
+    this.statusBars.energy.changeView(!bool);
+    this.mainButton.methods.setText('Return');
+    this.mainButton.methods.changeView(bool);
+    if (!bool) {
+      setTimeout(() => {
+        this.isPause = bool;
+        this.asteroids.forEach((ast) => {
+          ast.htmlElement.classList.toggle('asteroid_animation-state_stop');
+        });
+      }, 500);
+      this.mainButton.htmlElement.removeEventListener('click', () => {
+        this.pause();
+      });
+      window.location.href = '#main-game';
+    } else {
+      this.mainButton.htmlElement.addEventListener('click', () => {
+        this.pause();
+      });
+      this.isPause = bool;
+      this.asteroids.forEach((ast) => {
+        ast.htmlElement.classList.toggle('asteroid_animation-state_stop');
+      });
+    }
   }
 
   clearAll() {
@@ -225,6 +264,9 @@ export class Game {
       formatMilliseconds(this.time * this.tick),
       this.score,
     );
+    window.location.href = '#game-over';
+    this.mainButton.methods.changeView(true);
+    this.mainButton.methods.setText('Try again');
     document.removeEventListener('keyup', this.handlerKeyPress);
     this.clearAll();
   }
@@ -458,7 +500,8 @@ export class Game {
       field: this.field,
       shipSize: this.spaceShipSize,
       speed: this.speed,
-      coordinates: this.coordinates,
+      // coordinates: this.coordinates,
+      coordinates: { x: 65, y: 70 },
     });
 
     this.htmlField.appendChild(this.spaceShip.htmlElement);

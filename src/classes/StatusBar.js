@@ -10,8 +10,13 @@ export class StatusBar {
     };
 
     // ? --- --- --- methods --- --- ---
+    this.setValue = this.setValue.bind(this);
     this.increase = this.increase.bind(this);
     this.decrease = this.decrease.bind(this);
+  }
+
+  setValue(value) {
+    this.value.current = value;
   }
 
   increase(value) {

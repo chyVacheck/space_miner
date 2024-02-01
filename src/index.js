@@ -7,6 +7,18 @@ import { Notification } from './classes/Notification.js';
 // ? utils
 import { GAME_SETTING } from './utils/constants.js';
 
+const mainButton = {
+  htmlElement: document.getElementById('main-button'),
+  methods: {
+    setText(text) {
+      mainButton.htmlElement.querySelector('p').innerText = text;
+    },
+    changeView(bool) {
+      mainButton.htmlElement.style.display = bool ? 'block' : 'none';
+    },
+  },
+};
+
 //
 //
 // ? --- --- --- init all classes --- --- ---
@@ -45,12 +57,13 @@ const statusBarEnergy = new StatusBarEnergy({
 // create game
 const game = new Game({
   gameOver: gameOver,
-  field: { x: GAME_SETTING.FIELD.X, y: GAME_SETTING.FIELD.Y },
+  mainButton: mainButton,
   energy: {
+    setValue: statusBarEnergy.setValue,
     changeView: statusBarEnergy.changeView,
-    decreaseEnergy: statusBarEnergy.decreaseEnergy,
-    increaseEnergy: statusBarEnergy.increaseEnergy,
-    renderEnergy: statusBarEnergy.renderAll,
+    decrease: statusBarEnergy.decreaseEnergy,
+    increase: statusBarEnergy.increaseEnergy,
+    render: statusBarEnergy.renderAll,
   },
   notification: {
     html: {
@@ -71,7 +84,6 @@ const game = new Game({
 //
 
 const keyButtons = document.getElementsByName('how-to-play-key-button');
-const startPlayButton = document.getElementById('button-start-play');
 const gameOverObj = {
   time: document.getElementById('game-over-time'),
   score: document.getElementById('game-over-score'),
@@ -96,17 +108,14 @@ function addWaveByClickOrPress(element, functionToDoInEnd = () => {}) {
 }
 
 function startPlay() {
-  startPlayButton.removeEventListener('click', startPlay);
+  mainButton.htmlElement.removeEventListener('click', startPlay);
   window.location.href = '#main-game';
-  startPlayButton.style.display = 'none';
+  mainButton.methods.changeView(false);
   game.start();
 }
 
 function gameOver(time, score) {
-  startPlayButton.style.display = 'block';
-  startPlayButton.addEventListener('click', startPlay);
-  startPlayButton.querySelector('p').innerText = 'Try again';
-  window.location.href = '#game-over';
+  mainButton.htmlElement.addEventListener('click', startPlay);
   gameOverObj.time.innerText = time;
   gameOverObj.score.innerText = score;
 }
@@ -117,18 +126,7 @@ function gameOver(time, score) {
 //
 //
 
-startPlayButton.addEventListener('click', startPlay);
-
-window.addEventListener('hashchange', () => {
-  const hash = window.location.hash;
-
-  if (hash === '#main-game') {
-    game.pause(false);
-  } else {
-    console.log('pause');
-    game.pause(true);
-  }
-});
+mainButton.htmlElement.addEventListener('click', startPlay);
 
 keyButtons.forEach((button) => {
   button.addEventListener('click', () => {
