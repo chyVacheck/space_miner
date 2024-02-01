@@ -149,26 +149,30 @@ export class Game {
       x: GAME_SETTING.SPACE_SHIP.COORDINATES.X,
       y: GAME_SETTING.SPACE_SHIP.COORDINATES.Y,
     };
-    this.energy.current = GAME_SETTING.ENERGY.VALUE.MAX;
+    this.energy.current = GAME_SETTING.ENERGY.VALUE.INIT;
+    this.energy.lastTick = 0;
     this.statusBars.energy.setValue(this.energy.current);
     this.statusBars.energy.changeView(true);
     this.speed.current =
-      GAME_SETTING.SPACE_SHIP[this.spaceShip.type].SPEED.INIT;
+      GAME_SETTING.SPACE_SHIP[this.typeOfSpaceShip].SPEED.INIT;
     this.notification.html.icon.addEventListener(
       'click',
       this.handlerClickPilot,
     );
+    this.statusBars.energy.render();
   }
 
   // ! --- --- --- main function --- --- ---
   start() {
     document.addEventListener('keyup', this.handlerKeyPress);
 
+    this._initAll();
+
     this._sayHello();
 
     this.createSpaceShip();
 
-    this._initAll();
+    this.renderAll();
 
     setTimeout(this.startGlobalInterval, 2_000);
   }
@@ -213,10 +217,6 @@ export class Game {
     }, this.tick);
   }
 
-  _check() {
-    console.log(208, 'function check');
-  }
-
   // just stop game for some time
   pause(bool = !this.isPause) {
     if (!this.isGameStart) return;
@@ -243,6 +243,7 @@ export class Game {
       this.asteroids.forEach((ast) => {
         ast.htmlElement.classList.toggle('asteroid_animation-state_stop');
       });
+      this.handlerClickPilot();
     }
   }
 
@@ -431,7 +432,6 @@ export class Game {
       this.energy.lastTick = this.time;
       this.increaseEnergy();
     }
-
     // max
     if (this.energy.current === this.energy.max) {
       // todo more then 30%
@@ -497,13 +497,12 @@ export class Game {
       type: this.typeOfSpaceShip,
       idElement: 'space-ship',
       idEngine: 'space-ship-engine',
-      field: this.field,
       shipSize: this.spaceShipSize,
       speed: this.speed,
-      // coordinates: this.coordinates,
-      coordinates: { x: 65, y: 70 },
+      coordinates: this.coordinates,
     });
 
+    this.moveForSpaceShip.lastTick = 0;
     this.htmlField.appendChild(this.spaceShip.htmlElement);
   }
 
@@ -548,7 +547,10 @@ export class Game {
         }
 
         // spend energy
-        if (this.isSpaceShipMoving) this.decreaseEnergy();
+        if (this.isSpaceShipMoving) {
+          console.log('- energy');
+          this.decreaseEnergy();
+        }
       }
     }
   }
@@ -631,15 +633,16 @@ export class Game {
   // ? --- --- --- energy --- --- ---
 
   // * here are no render
-  increaseEnergy(value = 1) {
+  increaseEnergy() {
     if (this.energy.current < this.energy.max)
-      this.energy.current = this.statusBars.energy.increase(value);
+      this.energy.current = this.statusBars.energy.increase();
   }
 
   // * here are no render
-  decreaseEnergy(value = 1) {
+  decreaseEnergy() {
     if (this.energy.current > this.energy.min) {
-      this.energy.current = this.statusBars.energy.decrease(value);
+      this.energy.current = this.statusBars.energy.decrease();
+      console.log(this.energy.current);
     }
   }
 }

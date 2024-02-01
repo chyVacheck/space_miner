@@ -19,12 +19,12 @@ export class StatusBar {
     this.value.current = value;
   }
 
-  increase(value) {
+  increase(value = 1) {
     if (this.value.current + value <= this.value.max)
       this.value.current += value;
   }
 
-  decrease(value) {
+  decrease(value = 1) {
     if (this.value.current - value >= this.value.min)
       this.value.current -= value;
   }

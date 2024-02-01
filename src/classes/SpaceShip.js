@@ -9,7 +9,6 @@ export class SpaceShip {
     type,
     idElement = `${type}-ship`,
     idEngine = `${type}-ship-engine`,
-    field = { x: GAME_SETTING.FIELD.X, y: GAME_SETTING.FIELD.Y },
     shipSize = 3,
     speed = 0,
     coordinates,
@@ -37,8 +36,8 @@ export class SpaceShip {
 
     //
     this.coordinates = {
-      maxX: field.x, // ! must be the same like in field.css
-      maxY: field.y, // ! must be the same like in field.css
+      maxX: GAME_SETTING.FIELD.X, // ! must be the same like in field.css
+      maxY: GAME_SETTING.FIELD.Y, // ! must be the same like in field.css
       x: coordinates.x, // number of rows
       y: coordinates.y, // number of column
     };
