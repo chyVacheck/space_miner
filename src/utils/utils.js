@@ -18,3 +18,17 @@ export function getRandomNumberByTickTime(time, mul = 1) {
 
   return getRandomNumber(min, max) * mul;
 }
+
+export function formatMilliseconds(milliseconds) {
+  let seconds = Math.floor(milliseconds / 1000);
+  let minutes = Math.floor(seconds / 60);
+  let hours = Math.floor(minutes / 60);
+
+  seconds %= 60;
+  minutes %= 60;
+
+  const formattedTime = `${hours ? hours + 'h ' : ''}${
+    minutes ? minutes + ' min ' : ''
+  }${seconds ? seconds + ' sec' : ''}`;
+  return formattedTime.trim();
+}

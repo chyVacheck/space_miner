@@ -1,4 +1,5 @@
 // ! modules
+import { GAME_SETTING } from '../utils/constants.js';
 import { StatusBar } from './StatusBar.js';
 //
 //
@@ -8,8 +9,8 @@ export class StatusBarEnergy extends StatusBar {
     selectorsEnergy,
     classListEnergy,
     classActive,
-    initialValue = 20,
-    maxValue = 20,
+    initialValue = GAME_SETTING.ENERGY.VALUE.INIT,
+    maxValue = GAME_SETTING.ENERGY.VALUE.MAX,
   }) {
     super({
       id,
@@ -35,6 +36,7 @@ export class StatusBarEnergy extends StatusBar {
 
     // ? --- --- --- methods --- --- ---
     this.renderAll = this.renderAll.bind(this);
+    this.changeView = this.changeView.bind(this);
     this.increaseEnergy = this.increaseEnergy.bind(this);
     this.decreaseEnergy = this.decreaseEnergy.bind(this);
     this.calculateEnergy = this.calculateEnergy.bind(this);
@@ -53,6 +55,11 @@ export class StatusBarEnergy extends StatusBar {
       }
     });
   };
+
+  changeView() {
+    this.htmlElement.style.display =
+      this.htmlElement.style.display === 'none' ? '' : 'none';
+  }
 
   increaseEnergy(value) {
     this.increase(value);

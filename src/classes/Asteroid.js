@@ -7,7 +7,6 @@ export class Asteroid {
   constructor({
     lastTick = 0,
     idElement = 'asteroid',
-    field = { x: GAME_SETTING.FIELD.X, y: GAME_SETTING.FIELD.Y },
     size = 2,
     speed = 0,
     coordinates,
@@ -27,17 +26,17 @@ export class Asteroid {
     this.htmlElement.name = 'asteroid';
     this.htmlElement.classList.add('asteroid');
     this.htmlElement.style.setProperty('--size-asteroid', this.size);
-    this.htmlElement.style.setProperty('--time-rotate', `${this.size - 2}s`);
+    this.htmlElement.style.setProperty('--time-rotate', `${this.size - 3}s`);
 
     //
     this.coordinates = {
-      maxX: field.x, // ! must be the same like in field.css
-      maxY: field.y, // ! must be the same like in field.css
+      maxX: GAME_SETTING.FIELD.X, // ! must be the same like in field.css
+      maxY: GAME_SETTING.FIELD.Y, // ! must be the same like in field.css
       x: coordinates.x, // number of rows
       y: coordinates.y, // number of column
     };
 
-    console.log('asteroid is ready:', this);
+    // ! console.log('asteroid is ready:', this);
 
     // ? --- --- --- methods --- --- ---
     this.render = this.render.bind(this);
@@ -51,8 +50,9 @@ export class Asteroid {
     this.htmlElement.style.gridRow = this.coordinates.y;
   }
 
-  destroy() {
+  remove() {
     this.htmlElement.remove();
+    return null;
   }
 
   // create a new miner - ship

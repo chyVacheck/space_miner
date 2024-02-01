@@ -3,34 +3,47 @@ import { Asteroid } from './Asteroid.js';
 import { SpaceShip } from './SpaceShip.js';
 
 // ? utils
-import { getRandomNumberByTickTime, getRandomNumber } from '../utils/utils.js';
+import {
+  getRandomNumberByTickTime,
+  getRandomNumber,
+  formatMilliseconds,
+} from '../utils/utils.js';
+import { GAME_SETTING } from '../utils/constants.js';
 
 //
 //
 export class Game {
   // ! --- --- --- constructor --- --- ---÷
   constructor({
+    gameOver,
     fieldId = 'game-field',
     field = { x: 126, y: 96 },
     coordinates = { x: 65, y: 70 },
     energy,
     notification,
+    typeOfSpaceShip = 'MINER',
   }) {
+    this.typeOfSpaceShip = typeOfSpaceShip;
+    this.functionWhenGameOver = gameOver;
+    this.isPause = false;
+    this.isGameOver = false;
     this.score = 0;
     this.time = 1;
     this.tick = 10;
     this.globalInterval;
     this.energy = {
+      lastTick: 0,
       isCharged: true,
-      max: 20,
-      current: 20,
-      min: 0,
+      recovery: GAME_SETTING.ENERGY.VALUE.RECOVERY,
+      max: GAME_SETTING.ENERGY.VALUE.MAX,
+      current: GAME_SETTING.ENERGY.VALUE.INIT,
+      min: GAME_SETTING.ENERGY.VALUE.MIN,
     };
     this.spaceShip;
     this.moveForSpaceShip = { lastTick: 0 };
-    this.spaceShipSize = 3;
+    this.spaceShipSize = GAME_SETTING.SPACE_SHIP[typeOfSpaceShip].SIZE;
     this.allowedKeys = [
-      'shift',
+      ' ', // space
       'q',
       'e',
       'arrowup',
@@ -51,10 +64,9 @@ export class Game {
       y: coordinates.y,
     };
     this.speed = {
-      min: 0,
-      possibleOptions: [0, 1, 2, 4, 5, 10, 15],
-      current: 1,
-      max: 10,
+      min: GAME_SETTING.SPACE_SHIP[typeOfSpaceShip].SPEED.MIN,
+      current: GAME_SETTING.SPACE_SHIP[typeOfSpaceShip].SPEED.INIT,
+      max: GAME_SETTING.SPACE_SHIP[typeOfSpaceShip].SPEED.MAX,
     };
     this.vector = {
       x: 0,
@@ -63,6 +75,7 @@ export class Game {
     this.isSpaceShipMoving = false;
     this.statusBars = {
       energy: {
+        changeView: energy.changeView,
         increase: energy.increaseEnergy,
         decrease: energy.decreaseEnergy,
         render: energy.renderEnergy,
@@ -87,34 +100,26 @@ export class Game {
       },
     };
 
-    // ? --- --- --- space ship --- --- ---
-    // create
-    this.spaceShip = new SpaceShip({
-      idElement: 'space-ship',
-      idEngine: 'space-ship-engine',
-      field: this.field,
-      shipSize: this.spaceShipSize,
-      speed: this.speed,
-      coordinates: this.coordinates,
-    });
-
     // ? --- --- --- asteroids --- --- ---
     // create
     this.asteroids = [];
 
     // ? --- --- --- methods --- --- ---
     this.start = this.start.bind(this);
-    this.render = this.render.bind(this);
+    this.render = this.renderAll.bind(this);
+    this.gameOver = this.gameOver.bind(this);
     this.manageSpeed = this.manageSpeed.bind(this);
     this.manageEnergy = this.manageEnergy.bind(this);
     this.moveSpaceShip = this.moveSpaceShip.bind(this);
     this.increaseEnergy = this.increaseEnergy.bind(this);
     this.decreaseEnergy = this.decreaseEnergy.bind(this);
     this.createAsteroid = this.createAsteroid.bind(this);
+    this.createSpaceShip = this.createSpaceShip.bind(this);
     this.manageCollision = this.manageCollision.bind(this);
     this.handlerKeyPress = this.handlerKeyPress.bind(this);
     this.handlerClickPilot = this.handlerClickPilot.bind(this);
     this._closeNotification = this.closeNotification.bind(this);
+    this.startGlobalInterval = this.startGlobalInterval.bind(this);
 
     // ! dev
     window.createAsteroid = this.createAsteroid; // todo delete in release
@@ -137,8 +142,10 @@ export class Game {
 
   // ! --- --- --- main function --- --- ---
   start() {
-    this.createAsteroid();
-
+    this.isGameOver = false;
+    this.isPause = false;
+    this.energy.current = GAME_SETTING.ENERGY.VALUE.MAX;
+    this.statusBars.energy.changeView();
     document.addEventListener('keyup', this.handlerKeyPress);
     this.notification.html.icon.addEventListener(
       'click',
@@ -147,12 +154,22 @@ export class Game {
 
     this._sayHello();
 
-    //
+    this.createSpaceShip();
+
+    setTimeout(this.startGlobalInterval, 2_000);
+  }
+
+  startGlobalInterval() {
     this.globalInterval = setInterval(() => {
+      // if pause enable, just skip this tick
+      if (this.isPause) return;
+
       this.isSpaceShipMoving = false;
 
-      // TODO
-      if (this.asteroids.length < 25 && this.time % 20 === 0)
+      if (
+        this.asteroids.length < 15 + Math.round(this.time / 500) &&
+        this.time % 20 === 0
+      )
         this.createAsteroid();
 
       this.moveAsteroids();
@@ -172,27 +189,67 @@ export class Game {
         y: this.vector.y,
       });
 
-      // manager speed
-      this.manageSpeed();
-
-      // manage energy
-      this.manageEnergy();
-
-      // manage notification
-      this.manageNotification();
+      this.manageAll();
 
       // ? render
-      this.render();
-      this.time++;
+      if (!this.isGameOver) {
+        this.renderAll();
+        this.time++;
+      }
     }, this.tick);
+  }
+
+  // just stop game for some time
+  pause(bool = !this.isPause) {
+    this.isPause = bool;
+    this.asteroids.forEach((ast) => {
+      ast.htmlElement.classList.toggle('asteroid_animation-state_stop');
+    });
+  }
+
+  clearAll() {
+    this.spaceShip = this.spaceShip.remove();
+    this.asteroids.map((ast) => {
+      ast.remove();
+    });
+    this.asteroids = [];
+    this.statusBars.energy.changeView();
+  }
+
+  // if u lose
+  gameOver() {
+    clearInterval(this.globalInterval);
+    this.isGameOver = true;
+    this.isPause = false;
+    this.functionWhenGameOver(
+      formatMilliseconds(this.time * this.tick),
+      this.score,
+    );
+    document.removeEventListener('keyup', this.handlerKeyPress);
+    this.clearAll();
   }
 
   // ! --- --- --- function --- --- ---
   // ? render method
-  render() {
+  renderAll() {
     this.statusBars.energy.render(); // energy status bar
     this.spaceShip.render(); // spaceShip (user)
     this.asteroids.forEach((ast) => ast.render());
+  }
+
+  // ? manage method
+  manageAll() {
+    // manager speed
+    this.manageSpeed();
+
+    // manage energy
+    this.manageEnergy();
+
+    // manage notification
+    this.manageNotification();
+
+    // manage
+    this.manageCollision();
   }
 
   // --- --- --- handlers --- --- ---
@@ -200,8 +257,12 @@ export class Game {
   // key pressed
   handlerKeyPress(event) {
     const button = event.key.toLowerCase();
+
+    // ? pause
+    if (button === ' ') this.pause();
+
     // if not allowed just do nothing
-    if (!this.allowedKeys.includes(button)) return;
+    if (!this.allowedKeys.includes(button) || this.isPause) return;
 
     switch (button) {
       // ? change vector
@@ -265,7 +326,7 @@ export class Game {
     }
 
     console.log(
-      `speed: ${this.speed.current}\nvector: x:${this.vector.x} y:${this.vector.y}`,
+      `speed: ${this.speed.current}\nvector: x:${this.vector.x} y:${this.vector.y}\nenergy: ${this.energy.current}`,
     );
   }
 
@@ -273,8 +334,19 @@ export class Game {
   handlerClickPilot() {
     this.notification.canBeClosed = false;
     this.notification.isShowing = true;
+
     // todo make a random phrases
-    this.notification.setText(`I am okay, thanks`, 25);
+    if (this.isGameOver) {
+      this.notification.setText(`It was good, let's try one more time`, 45);
+    } else if (this.isPause) {
+      this.notification.setText(
+        `When you will be ready, press space to return game`,
+        45,
+      );
+    } else {
+      this.notification.setText(`I am okay, thanks`, 25);
+    }
+
     this.notification.show();
     setTimeout(() => {
       this.notification.canBeClosed = true;
@@ -303,43 +375,37 @@ export class Game {
   // ? --- --- --- managers --- --- ---
 
   // manage to speed
-  manageSpeed() {
-    const _value =
-      this.speed.current * (Math.abs(this.vector.x) + Math.abs(this.vector.y));
+  manageSpeed() {}
 
-    // manage in or de crease energy we need
-    switch (_value) {
-      case 2:
-        if (this.isSpaceShipMoving) {
-          this.decreaseEnergy(_value - 1);
-        }
-        break;
-
-      case 1:
-        break;
-
-      case 0:
-        break;
-
-      default:
-        break;
-    }
-  }
-
-  // manage to set speed 1 because of low energy
+  // manage energy
   manageEnergy() {
+    //  increase energy
+    if (
+      Math.round(this.time / (1000 / this.tick / this.energy.recovery)) >
+      Math.round(
+        this.energy.lastTick / (1000 / this.tick / this.energy.recovery),
+      )
+    ) {
+      this.energy.lastTick = this.time;
+      this.increaseEnergy();
+    }
+
     // max
     if (this.energy.current === this.energy.max) {
       // todo more then 30%
       this.energy.isCharged = true;
     } else {
-      if (!this.isSpaceShipMoving) this.increaseEnergy();
-
       // min
       if (this.energy.current === this.energy.min) {
-        this.speed.current = 1;
+        this.speed.current = Math.round(
+          GAME_SETTING.SPACE_SHIP[this.spaceShip.type].SPEED.MAX / 2 - 1,
+        );
 
+        // manage to set speed 1 because of low energy
         if (!this.notification.isShowing && this.energy.isCharged) {
+          this.speed.current = Math.round(
+            GAME_SETTING.SPACE_SHIP[this.spaceShip.type].SPEED.MAX / 2 - 1,
+          );
           this.alert(`Low energy\nNow speed is ${this.speed.current}`, 50);
           this.energy.isCharged = false;
         }
@@ -354,14 +420,54 @@ export class Game {
     }
   }
 
-  // todo make function to calculate collision
-  manageCollision() {}
+  // manage collision
+  manageCollision() {
+    const { x, y } = this.spaceShip.coordinates;
+
+    // collision for space ship
+    for (let i = 0; i < this.asteroids.length; i++) {
+      const ast = this.asteroids[i];
+      if (
+        // top Y(top) collision
+        ((ast.coordinates.y <= y && y <= ast.coordinates.y + ast.size - 1) ||
+          // top Y(bottom) collision
+          (ast.coordinates.y <= y + this.spaceShip.size - 1 &&
+            y + this.spaceShip.size - 1 <= ast.coordinates.y + ast.size - 1)) &&
+        // top X(left) collision
+        ((ast.coordinates.x <= x && x <= ast.coordinates.x + ast.size - 1) ||
+          // top X(right) collision
+          (ast.coordinates.x <= x + this.spaceShip.size - 1 &&
+            x + this.spaceShip.size - 1 <= ast.coordinates.x + ast.size - 1))
+      ) {
+        this.gameOver();
+        break;
+      }
+    }
+
+    // todo collision for asteroids between other asteroids
+  }
 
   // ? --- --- --- space ship --- --- ---
+
+  // create a new one Space ship
+  createSpaceShip() {
+    this.spaceShip = new SpaceShip({
+      type: this.typeOfSpaceShip,
+      idElement: 'space-ship',
+      idEngine: 'space-ship-engine',
+      field: this.field,
+      shipSize: this.spaceShipSize,
+      speed: this.speed,
+      coordinates: this.coordinates,
+    });
+
+    this.htmlField.appendChild(this.spaceShip.htmlElement);
+  }
 
   // * here are no render
   moveSpaceShip() {
     // calculate time
+    const { x, y } = this.vector;
 
     if (
       Math.round(this.time / (1000 / this.tick / this.speed.current)) >
@@ -372,26 +478,34 @@ export class Game {
     ) {
       this.moveForSpaceShip.lastTick = this.time;
 
-      // ? X
-      if (
-        this.coordinates.x + 1 * this.vector.x + (this.spaceShipSize - 1) <=
-          this.field.x &&
-        this.coordinates.x + 1 * this.vector.x > 0 &&
-        Math.abs(this.vector.x) > 0
-      ) {
-        this.isSpaceShipMoving = true;
-        this.coordinates.x += 1 * this.vector.x;
-      }
+      // is moving ?
+      if (Math.abs(x) + Math.abs(y) * this.speed.current > 0) {
+        // ? X
+        if (
+          this.coordinates.x + 1 * x + (this.spaceShipSize - 1) <=
+            this.field.x &&
+          this.coordinates.x + 1 * x > 0 &&
+          Math.abs(x) > 0
+        ) {
+          this.coordinates.x += 1 * x;
+          // remember that moving
+          this.isSpaceShipMoving = true;
+        }
 
-      // ? Y
-      if (
-        this.coordinates.y + 1 * this.vector.y + (this.spaceShipSize - 1) <=
-          this.field.y &&
-        this.coordinates.y + 1 * this.vector.y > 0 &&
-        Math.abs(this.vector.y) > 0
-      ) {
-        this.isSpaceShipMoving = true;
-        this.coordinates.y += 1 * this.vector.y;
+        // ? Y
+        if (
+          this.coordinates.y + 1 * y + (this.spaceShipSize - 1) <=
+            this.field.y &&
+          this.coordinates.y + 1 * y > 0 &&
+          Math.abs(y) > 0
+        ) {
+          this.coordinates.y += 1 * y;
+          // remember that moving
+          this.isSpaceShipMoving = true;
+        }
+
+        // spend energy
+        if (this.isSpaceShipMoving) this.decreaseEnergy();
       }
     }
   }
@@ -410,7 +524,7 @@ export class Game {
 
     // check coordinates
     while (!coordinates.x) {
-      console.log('try generate asteroid x');
+      // console.log('try generate asteroid x');
       let uniq = true;
       let _x = getRandomNumber(2, this.field.x - size + 1);
       this.asteroids.forEach((asteroid) => {
@@ -434,9 +548,6 @@ export class Game {
     this.asteroids[index] = new Asteroid({
       time: this.time,
       idElement: 'asteroid',
-      // if less 300 then from 1 to 3
-      // if more 300 then from 2 to 4
-      // if more 500 then from 3 to 4
       size: size,
       speed: getRandomNumberByTickTime(this.time * this.tick),
       field: this.field,
@@ -466,7 +577,8 @@ export class Game {
           ast.setCoordinate(_coordinates);
           _coordinates.y += 1;
         } else {
-          ast.destroy();
+          ast.remove();
+          this.score++;
           this.asteroids.splice(index, 1);
         }
       }

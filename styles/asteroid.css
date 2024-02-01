@@ -5,6 +5,11 @@
 
   width: calc(var(--size-asteroid) * 7px);
   height: calc(var(--size-asteroid) * 7px);
+  animation-play-state: running;
+}
+
+.asteroid_animation-state_stop {
+  animation-play-state: paused;
 }
 
 .asteroid__image {

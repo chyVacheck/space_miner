@@ -4,6 +4,9 @@ import { Game } from './classes/Game.js';
 import { StatusBarEnergy } from './classes/StatusBarEnergy.js';
 import { Notification } from './classes/Notification.js';
 
+// ? utils
+import { GAME_SETTING } from './utils/constants.js';
+
 //
 //
 // ? --- --- --- init all classes --- --- ---
@@ -35,14 +38,16 @@ const statusBarEnergy = new StatusBarEnergy({
     half: 'status-bar__energy_charge_half',
     full: 'status-bar__energy_charge_full',
   },
-  initialValue: 20,
-  maxValue: 20,
+  initialValue: GAME_SETTING.ENERGY.VALUE.INIT,
+  maxValue: GAME_SETTING.ENERGY.VALUE.MAX,
 });
 
 // create game
 const game = new Game({
-  field: { x: 126, y: 96 },
+  gameOver: gameOver,
+  field: { x: GAME_SETTING.FIELD.X, y: GAME_SETTING.FIELD.Y },
   energy: {
+    changeView: statusBarEnergy.changeView,
     decreaseEnergy: statusBarEnergy.decreaseEnergy,
     increaseEnergy: statusBarEnergy.increaseEnergy,
     renderEnergy: statusBarEnergy.renderAll,
@@ -67,6 +72,10 @@ const game = new Game({
 
 const keyButtons = document.getElementsByName('how-to-play-key-button');
 const startPlayButton = document.getElementById('button-start-play');
+const gameOverObj = {
+  time: document.getElementById('game-over-time'),
+  score: document.getElementById('game-over-score'),
+};
 
 //
 //
@@ -86,19 +95,20 @@ function addWaveByClickOrPress(element, functionToDoInEnd = () => {}) {
   });
 }
 
-function changeViewOfElement(element, activeHash, active = 'block') {
-  const _currentHash = window.location.hash;
-
-  if (_currentHash === activeHash) {
-    element.style.display = active;
-  } else {
-    element.style.display = 'none';
-  }
+function startPlay() {
+  startPlayButton.removeEventListener('click', startPlay);
+  window.location.href = '#main-game';
+  startPlayButton.style.display = 'none';
+  game.start();
 }
 
-function startPlay() {
-  window.location.href = '#game';
-  game.start();
+function gameOver(time, score) {
+  startPlayButton.style.display = 'block';
+  startPlayButton.addEventListener('click', startPlay);
+  startPlayButton.querySelector('p').innerText = 'Try again';
+  window.location.href = '#game-over';
+  gameOverObj.time.innerText = time;
+  gameOverObj.score.innerText = score;
 }
 
 //
@@ -110,8 +120,14 @@ function startPlay() {
 startPlayButton.addEventListener('click', startPlay);
 
 window.addEventListener('hashchange', () => {
-  changeViewOfElement(startPlayButton, '#how-to-play');
-  changeViewOfElement(statusBarEnergy.htmlElement, '#game', 'flex');
+  const hash = window.location.hash;
+
+  if (hash === '#main-game') {
+    game.pause(false);
+  } else {
+    console.log('pause');
+    game.pause(true);
+  }
 });
 
 keyButtons.forEach((button) => {

@@ -1,19 +1,21 @@
 // ! modules
 // ? utils
 import { GAME_SETTING } from './../utils/constants.js';
+import { createId } from '../utils/utils.js';
 //
 //
 export class SpaceShip {
   constructor({
-    idElement = 'miner-ship',
-    idEngine = 'miner-ship-engine',
+    type,
+    idElement = `${type}-ship`,
+    idEngine = `${type}-ship-engine`,
     field = { x: GAME_SETTING.FIELD.X, y: GAME_SETTING.FIELD.Y },
     shipSize = 3,
     speed = 0,
     coordinates,
   }) {
+    this.type = type;
     this.size = shipSize;
-    this.movingInterval;
     this.vector = {
       y: 0, // -1 (down) 1 (up)
       x: 0, // -1 (left) 1 (right)
@@ -23,6 +25,16 @@ export class SpaceShip {
     // ? --- --- html --- ---
     this.htmlElement = document.getElementById(idElement); // <div id='thisOne' />
     this.htmlEngine = document.getElementById(idEngine); // <div id='thisOne' />
+
+    this.htmlElement = document.createElement('div'); // (idElement); // <div id='thisOne' />
+    this.htmlElement.appendChild(
+      document.getElementById(`${idElement}-template`).content.cloneNode(true),
+    );
+
+    this.htmlElement.id = createId(idElement);
+    this.htmlElement.name = idElement;
+    this.htmlElement.classList.add('space-ship');
+
     //
     this.coordinates = {
       maxX: field.x, // ! must be the same like in field.css
@@ -32,7 +44,6 @@ export class SpaceShip {
     };
 
     console.log('miner is ready:', this);
-    this.htmlElement.hidden = false;
     this.htmlElement.style.gridColumn = this.coordinates.x;
     this.htmlElement.style.gridRow = this.coordinates.y;
 
@@ -67,6 +78,11 @@ export class SpaceShip {
     this.coordinates.y = 85;
     this.render();
     this.htmlElement.hidden = false;
+  }
+
+  remove() {
+    this.htmlElement.remove();
+    return null;
   }
 
   checkEnginePower = () => {

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="%PUBLIC_URL%/../assets/icon/spaceSuit.svg" />
+    <link rel="icon" href="./assets/icon/space-suit.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./index.css" />
     <title>Space miner</title>
@@ -38,15 +38,6 @@
                 >How to play</a
               >
             </li>
-
-            <!-- ? settings -->
-            <!-- <li class="navigation__item">
-              <a
-                href="#settings"
-                class="navigation__link link text text_size_big"
-                >Settings</a
-              >
-            </li> -->
           </ul>
         </nav>
       </div>
@@ -172,20 +163,19 @@
       </section>
 
       <!-- game -->
-      <section id="game" class="container">
+      <section id="main-game" class="container">
         <!-- ? game -->
         <article id="game-field" class="field">
           <!-- ? ship -->
-          <div hidden id="space-ship" class="space-ship">
+          <template id="space-ship-template">
             <img
               class="space-ship__img"
               src="%PUBLIC_URL%/../assets/icon/space-ship.svg"
               alt="miner ship"
             />
-            <!-- ? engine -->
+            <!-- engine -->
             <div id="space-ship-engine" class="space-ship__engine"></div>
-            <!-- <div id="space-ship-traces" class="space-ship__traces"></div> -->
-          </div>
+          </template>
           <!-- ? asteroid -->
           <template id="asteroid-template">
             <img
@@ -197,8 +187,28 @@
         </article>
       </section>
 
-      <!-- settings -->
-      <!-- <section id="settings" class="container settings">Settings</section> -->
+      <!-- gameOver -->
+      <section id="game-over" class="container game-over">
+        <div class="game-over__container">
+          <h2 class="first-title game-over__title">Game Over</h2>
+
+          <div>
+            <p class="text">
+              You have played:
+              <span id="game-over-time" class="text_color_accent">123</span>
+            </p>
+            <p class="text">
+              Your score:
+              <span id="game-over-score" class="text_color_accent">123</span>
+            </p>
+          </div>
+
+          <p class="text">
+            Don't worry, the pilot has been rescued and he is already wait for
+            you to continue space exploration
+          </p>
+        </div>
+      </section>
     </main>
 
     <!-- ? footer -->
@@ -212,7 +222,11 @@
         </button>
 
         <!-- status bar of energy -->
-        <div id="footer-energy-status-bar" class="status-bar">
+        <div
+          id="footer-energy-status-bar"
+          style="display: none"
+          class="status-bar"
+        >
           <img
             src="%PUBLIC_URL%/../assets/icon/energy.svg"
             alt="energy"

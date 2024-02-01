@@ -21,6 +21,9 @@
 @import url(./styles/how-to-play.css);
 @import url(./styles/key-buttons.css);
 
+/* ? game over */
+@import url(./styles/game-over.css);
+
 /* ? footer */
 @import url(./styles/footer.css);
 @import url(./styles/button-start-play.css);
@@ -61,6 +64,7 @@ body {
   /* ? color */
   --accent-main-color: #ea6b65;
   --accent-secondary-color: #00bdc4; /* #248bf2 */
+  --accent-other-color: #3ddc84;
 
   /* ? energy color */
   --energy-empty-color: #f44345;
@@ -71,9 +75,11 @@ body {
   --fg-main-color: #404040;
   --fg-light-color: #eeeeee;
   --fg-accent-color: var(--accent-secondary-color);
+  --fg-secondary-accent-color: var(--accent-other-color);
 
   /* ? bg color */
-  --bg-main-color: #211e34;
+
+  --bg-main-color: #0e0b1f;
   --bg-secondary-color: #060708;
   --bg-popup-color: #d9d9d9;
   --bg-status-bar-color: #b9b9b9;
