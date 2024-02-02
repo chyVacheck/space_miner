@@ -2,7 +2,7 @@
 
 # Release
 
-Current release version is v1.0.0
+Current release version is v1.1.0
 
 All release you can look [here](https://github.com/chyVacheck/space_miner/releases)
 
@@ -15,12 +15,13 @@ Space Miner is an exhilarating arcade game where you take control of a spaceship
 - [x] From the functionality will be the movement of the ship on the playing field
 - [x] In a random place on top of the playing field will appear asteroids and meteorites, which will fly down
 - [x] User can lose if collide with something in space
+- [x] Make background music
 
 ## Future updates
 
 - [x] Rewrite description in how-to-play screen
 - [ ] Make some popup for pause
-- [ ] Make some background animation
+- [x] Make some background animation
 - [ ] Make speedometer
 
 ## If have enough time
