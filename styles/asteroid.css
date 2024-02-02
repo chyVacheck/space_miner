@@ -1,10 +1,8 @@
 .asteroid {
-  width: 14px;
-  height: 14px;
   animation: rotate var(--time-rotate) linear infinite;
 
-  width: calc(var(--size-asteroid) * 7px);
-  height: calc(var(--size-asteroid) * 7px);
+  width: calc(var(--size-asteroid) * var(--field-width));
+  height: calc(var(--size-asteroid) * var(--field-height));
   animation-play-state: running;
 }
 

@@ -5,9 +5,19 @@
   --button-width: 32px;
   --button-height: 32px;
 
-  display: grid;
-  grid-template-rows: repeat(2, var(--button-width));
-  grid-template-columns: repeat(3, var(--button-height));
+  /* max-width: calc(3 * var(--button-width) + 2 * 7px); */
+  width: calc(5 * var(--button-width) + 4 * 7px);
+
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.key-buttons_type_row {
+  display: flex;
+  gap: 7px;
+  max-width: calc(3 * var(--button-width) + 2 * 7px);
 }
 
 .key-button {
@@ -22,6 +32,8 @@
   cursor: pointer;
   position: relative;
   background-color: var(--accent-secondary-color);
+  padding: 0;
+  border: none;
 
   &.key-button_state_pressed,
   &:hover {
@@ -36,6 +48,11 @@
     border: none;
     padding-top: 1px;
     border: 1px solid var(--fg-light-color);
+  }
+
+  /* modifications */
+  &.key-button_type_space-bar {
+    width: calc(5 * var(--button-width) + 4 * 7px);
   }
 }
 
@@ -52,10 +69,9 @@
 
 .key-button__letter {
   background-color: var(--bg-popup-color);
-  height: 30px;
-  width: 30px;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
   border-radius: 3px;
-  /* border-top-left-radius: 2px solid var(--fg-light-color); */
   border-top: 2px solid var(--fg-light-color);
   border-left: 2px solid var(--fg-light-color);
   text-align: center;

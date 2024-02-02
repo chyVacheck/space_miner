@@ -2,8 +2,8 @@
 //
 export const GAME_SETTING = {
   FIELD: {
-    X: 126,
-    Y: 96,
+    X: 205,
+    Y: 130,
   },
   ENERGY: {
     VALUE: {
@@ -14,9 +14,9 @@ export const GAME_SETTING = {
     },
   },
   SPACE_SHIP: {
-    COORDINATES: { X: 65, Y: 70 }, // start coordinates
+    COORDINATES: { X: 102, Y: 100 }, // start coordinates
     MINER: {
-      SIZE: 3,
+      SIZE: 4,
       SPEED: {
         MIN: 0,
         INIT: 0,

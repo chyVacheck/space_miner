@@ -1,0 +1,16 @@
+.audio {
+  --button-width: 64px;
+  --button-height: 32px;
+
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-left: auto;
+}
+
+.audio__name {
+  max-width: 90px;
+  color: var(--fg-light-color);
+  margin: 0;
+  font-weight: 400;
+}

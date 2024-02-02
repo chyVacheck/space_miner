@@ -89,6 +89,14 @@ const gameOverObj = {
   score: document.getElementById('game-over-score'),
 };
 
+const audio = {
+  htmlElement: document.getElementById('audio'),
+  htmlButtons: {
+    play: document.getElementById('audio-play-button'),
+    pause: document.getElementById('audio-pause-button'),
+  },
+};
+
 //
 //
 // ? --- --- --- function --- --- ---
@@ -142,6 +150,13 @@ keyButtons.forEach((button) => {
     }
   });
 });
+
+audio.htmlButtons.play.addEventListener('click', () =>
+  audio.htmlElement.play(),
+);
+audio.htmlButtons.pause.addEventListener('click', () =>
+  audio.htmlElement.pause(),
+);
 
 //
 //

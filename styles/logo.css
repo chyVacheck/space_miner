@@ -1,9 +1,10 @@
 .logo {
-  padding: 4px;
+  padding: 0 4px;
   position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
+  width: 360px;
 
   &:hover .logo__text {
     opacity: 1;
@@ -16,7 +17,7 @@
     left: 4px;
     width: 40px;
     height: 40px;
-    content: "";
+    content: '';
     border-radius: 30px;
 
     background-color: var(--bg-main-color);

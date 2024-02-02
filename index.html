@@ -23,8 +23,28 @@
             id="header-notification-text"
             class="logo__text text_size_small text notification"
           >
-            Here will be notification
+            Here will be notification <br />Press the button on the right to
+            play background music.
           </p>
+        </div>
+
+        <!-- ? audio -->
+
+        <div class="audio">
+          <audio id="audio" autoplay loop>
+            <source src="./assets/music/Space.wav" type="audio/wav" />
+            <!-- <source src="./assets/music/Space.mp3" type="audio/mp3" /> -->
+            Your browser does not support the audio tag.
+          </audio>
+
+          <h2 class="audio__name text_size_small text">Controls of bg music</h2>
+
+          <button class="audio-button key-button" id="audio-play-button">
+            <p class="text key-button__letter">Play</p>
+          </button>
+          <button class="audio-button key-button" id="audio-pause-button">
+            <p class="text key-button__letter">Pause</p>
+          </button>
         </div>
 
         <!-- ? navigation -->
@@ -57,47 +77,58 @@
           <!-- Control -->
           <div class="how-to-play__block how-to-play_sides_two">
             <article class="key-buttons how-to-play__key-buttons">
-              <div
-                name="how-to-play-key-button"
-                data-key="q"
-                class="key-button"
-              >
-                <p class="key-button__letter text">q</p>
+              <div class="key-buttons_type_row">
+                <div
+                  name="how-to-play-key-button"
+                  data-key="q"
+                  class="key-button"
+                >
+                  <p class="key-button__letter text">q</p>
+                </div>
+                <div
+                  name="how-to-play-key-button"
+                  data-key="w"
+                  class="key-button"
+                >
+                  <p class="key-button__letter text">w</p>
+                </div>
+                <div
+                  name="how-to-play-key-button"
+                  data-key="e"
+                  class="key-button"
+                >
+                  <p class="key-button__letter text">e</p>
+                </div>
+              </div>
+              <div class="key-buttons_type_row">
+                <div
+                  name="how-to-play-key-button"
+                  data-key="a"
+                  class="key-button"
+                >
+                  <p class="key-button__letter text">a</p>
+                </div>
+                <div
+                  name="how-to-play-key-button"
+                  data-key="s"
+                  class="key-button"
+                >
+                  <p class="key-button__letter text">s</p>
+                </div>
+                <div
+                  name="how-to-play-key-button"
+                  data-key="d"
+                  class="key-button"
+                >
+                  <p class="key-button__letter text">d</p>
+                </div>
               </div>
               <div
                 name="how-to-play-key-button"
-                data-key="w"
-                class="key-button"
+                data-key=" "
+                class="key-button key-button_type_space-bar"
               >
-                <p class="key-button__letter text">w</p>
-              </div>
-              <div
-                name="how-to-play-key-button"
-                data-key="e"
-                class="key-button"
-              >
-                <p class="key-button__letter text">e</p>
-              </div>
-              <div
-                name="how-to-play-key-button"
-                data-key="a"
-                class="key-button"
-              >
-                <p class="key-button__letter text">a</p>
-              </div>
-              <div
-                name="how-to-play-key-button"
-                data-key="s"
-                class="key-button"
-              >
-                <p class="key-button__letter text">s</p>
-              </div>
-              <div
-                name="how-to-play-key-button"
-                data-key="d"
-                class="key-button"
-              >
-                <p class="key-button__letter text">d</p>
+                <p class="key-button__letter text">Space bar</p>
               </div>
             </article>
 
@@ -162,7 +193,7 @@
       </section>
 
       <!-- game -->
-      <section id="main-game" class="container">
+      <section id="main-game" class="container game">
         <!-- ? game -->
         <article id="game-field" class="field">
           <!-- ? ship -->

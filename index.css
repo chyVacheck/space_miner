@@ -12,7 +12,8 @@
 /* ? main */
 @import url(./styles/main.css);
 
-/* ? field */
+/* ? game*/
+@import url(./styles/game.css);
 @import url(./styles/field.css);
 @import url(./styles/space-ship.css);
 @import url(./styles/asteroid.css);
@@ -26,6 +27,7 @@
 
 /* ? footer */
 @import url(./styles/footer.css);
+@import url(./styles/audio.css);
 @import url(./styles/button-start-play.css);
 @import url(./styles/status-bar.css);
 
@@ -44,15 +46,14 @@ body {
 
 #app {
   /* ? max - width */
-  --max-width-container: 882px;
+  --max-width-container: 1025px;
 
   /* ? filed */
-  --field-width: 7px;
-  --field-height: 7px;
+  --field-width: 5px;
+  --field-height: 5px;
 
   /* ? miner ship */
-  --miner-ship-width: 21px;
-  --miner-ship-height: 21px;
+  --miner-ship-size: 4;
 
   /* ? engine */
   --engine-work-color: #f44345;

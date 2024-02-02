@@ -1,6 +1,6 @@
 .space-ship {
-  width: var(--miner-ship-width);
-  height: var(--miner-ship-height);
+  width: calc(var(--field-width) * var(--miner-ship-size));
+  height: calc(var(--field-height) * var(--miner-ship-size));
 
   grid-column: 25;
   grid-row: 17;

@@ -380,7 +380,7 @@ export class Game {
 
     // todo make a random phrases
     if (this.isGameOver) {
-      this.notification.setText(`It was good, let's try one more time`, 45);
+      this.notification.setText(`It was good, lets try one more time`, 45);
     } else if (this.isPause) {
       this.notification.setText(
         `When you will be ready, press space to return game`,
