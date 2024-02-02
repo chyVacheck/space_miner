@@ -15,13 +15,14 @@ Space Miner is an exhilarating arcade game where you take control of a spaceship
 - [x] From the functionality will be the movement of the ship on the playing field
 - [x] In a random place on top of the playing field will appear asteroids and meteorites, which will fly down
 - [x] User can lose if collide with something in space
+- [x] Pause the game (Stop for a some time, and after return to game)
 - [x] Make background music
 
 ## Future updates
 
 - [x] Rewrite description in how-to-play screen
 - [ ] Make some popup for pause
-- [x] Make some background animation
+- [ ] Make some background animation
 - [ ] Make speedometer
 
 ## If have enough time
@@ -37,3 +38,7 @@ Space Miner is an exhilarating arcade game where you take control of a spaceship
 ## Deployment
 
 I was deployed this small game on [GitHub Pages](https://chyvacheck.github.io/space_miner/#how-to-play)
+
+## Presentation
+
+[Here](https://slides.com/d/SNNaXQM/live) you can find my small presentation about this project
