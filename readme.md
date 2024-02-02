@@ -41,4 +41,4 @@ I was deployed this small game on [GitHub Pages](https://chyvacheck.github.io/sp
 
 ## Presentation
 
-[Here](https://slides.com/d/SNNaXQM/live) you can find my small presentation about this project
+[Here](https://slides.com/chyvacheck/space-miner) you can find my small presentation about this project
