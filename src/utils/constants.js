@@ -14,9 +14,9 @@ export const GAME_SETTING = {
     },
   },
   SPACE_SHIP: {
-    COORDINATES: { X: 102, Y: 100 }, // start coordinates
+    COORDINATES: { X: 107, Y: 120 }, // start coordinates
     MINER: {
-      SIZE: 4,
+      SIZE: 5,
       SPEED: {
         MIN: 0,
         INIT: 0,

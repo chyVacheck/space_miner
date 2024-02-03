@@ -17,6 +17,7 @@
 @import url(./styles/field.css);
 @import url(./styles/space-ship.css);
 @import url(./styles/asteroid.css);
+@import url(./styles/space.css);
 
 /* ? how to play */
 @import url(./styles/how-to-play.css);
@@ -53,7 +54,7 @@ body {
   --field-height: 5px;
 
   /* ? miner ship */
-  --miner-ship-size: 4;
+  --miner-ship-size: 5;
 
   /* ? engine */
   --engine-work-color: #f44345;
@@ -88,6 +89,10 @@ body {
   /* ? border color */
   --border-main-color: #c9ccd1;
   --border-secondary-color: #e0e0e0;
+
+  /* ? space */
+  --start-main-shin-color: #eee;
+  --sun-main-shin-color: #ffd731;
 
   /* ? opacity */
   --opacity-hover: 0.8;

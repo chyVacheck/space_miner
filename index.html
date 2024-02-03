@@ -31,7 +31,7 @@
         <!-- ? audio -->
 
         <div class="audio">
-          <audio id="audio" autoplay loop>
+          <audio id="audio" loop>
             <source src="./assets/music/Space.wav" type="audio/wav" />
             <!-- <source src="./assets/music/Space.mp3" type="audio/mp3" /> -->
             Your browser does not support the audio tag.
@@ -214,6 +214,71 @@
               src="%PUBLIC_URL%/../assets/icon/asteroid.svg"
             />
           </template>
+
+          <!-- ? space background -->
+          <article id="sun" class="sun">
+            <!-- ? sun -->
+            <div class="orbit">
+              <img
+                title="Satellites are artificial objects in space that orbit around Earth or other planets, serving purposes such as communication, scientific research, and more."
+                class="space__obj satellite"
+                src="./assets/icon/space_satellite.svg"
+                alt="satellite"
+              />
+            </div>
+            <div class="orbit">
+              <img
+                class="space__obj solar-station"
+                src="./assets/icon/space_solar_station.svg"
+                alt="solar-station"
+              />
+            </div>
+
+            <!-- ? earth -->
+            <div class="orbit orbit_type_reverse">
+              <div class="orbit earth-orbit">
+                <img
+                  title="Earth is the third planet from the Sun in the Solar System and the only known celestial body where life exists"
+                  class="space__obj space__obj_type_nature earth"
+                  src="./assets/icon/earth.svg"
+                  alt="earth"
+                />
+                <img
+                  title="The Moon is Earth's natural satellite, the fifth largest moon in the Solar System, influencing tides on Earth"
+                  class="space__obj space__obj_type_nature moon"
+                  src="./assets/icon/moon.svg"
+                  alt="moon"
+                />
+              </div>
+            </div>
+
+            <!-- ? mars -->
+            <div class="orbit orbit_type_reverse">
+              <div class="mars-orbit">
+                <img
+                  title='Mars is the fourth planet from the Sun, often called the "Red Planet" due to the iron oxide prevalent on its surface'
+                  class="space__obj space__obj_type_nature mars"
+                  src="./assets/icon/mars.svg"
+                  alt="mars"
+                />
+                <img
+                  class="space__obj robot"
+                  src="./assets/icon/robot.svg"
+                  alt="robot"
+                />
+              </div>
+            </div>
+
+            <img
+              title="The Sun is the central star of the Solar System, primarily composed of hydrogen and helium, serving as the source of light and energy for all the planets"
+              class="space__obj space__obj_type_nature sun__image"
+              src="./assets/icon/sun.svg"
+              alt="sun"
+            />
+          </article>
+
+          <!-- ? starts -->
+          <!-- <span class="star" style="--row: 8; --column: 12"></span> -->
         </article>
       </section>
 

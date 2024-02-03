@@ -3,6 +3,7 @@
 import { Game } from './classes/Game.js';
 import { StatusBarEnergy } from './classes/StatusBarEnergy.js';
 import { Notification } from './classes/Notification.js';
+import { Space } from './classes/Space.js';
 
 // ? utils
 import { GAME_SETTING } from './utils/constants.js';
@@ -24,6 +25,12 @@ const mainButton = {
 // ? --- --- --- init all classes --- --- ---
 //
 //
+
+// solar system
+const space = new Space({
+  idElement: 'game-field',
+  idSun: 'sun',
+});
 
 // notification
 const notification = new Notification({
@@ -58,6 +65,7 @@ const statusBarEnergy = new StatusBarEnergy({
 const game = new Game({
   gameOver: gameOver,
   mainButton: mainButton,
+  space: space,
   energy: {
     setValue: statusBarEnergy.setValue,
     changeView: statusBarEnergy.changeView,
@@ -119,6 +127,7 @@ function startPlay() {
   mainButton.htmlElement.removeEventListener('click', startPlay);
   window.location.href = '#main-game';
   mainButton.methods.changeView(false);
+  // space.closeView();
   game.start();
 }
 
@@ -163,3 +172,4 @@ audio.htmlButtons.pause.addEventListener('click', () =>
 // ? --- --- --- start --- --- ---
 //
 //
+space.initStars();

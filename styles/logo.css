@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  width: 360px;
+  max-width: 480px;
 
   &:hover .logo__text {
     opacity: 1;
@@ -53,7 +53,6 @@
 
 .logo__text {
   z-index: 1;
-  max-width: 300px;
   border: 1px solid var(--border-secondary-color);
   background: var(--bg-popup-color);
   padding: 4px 6px;
@@ -61,25 +60,4 @@
   border-radius: 7px;
   opacity: 0;
   transition: all 0.4s ease-in-out;
-}
-
-@keyframes rotateAnimation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes jumpAnimation {
-  0% {
-    scale: 0.8;
-  }
-  50% {
-    scale: 1;
-  }
-  100% {
-    scale: 0.8;
-  }
 }

@@ -22,7 +22,7 @@ Space Miner is an exhilarating arcade game where you take control of a spaceship
 
 - [x] Rewrite description in how-to-play screen
 - [ ] Make some popup for pause
-- [ ] Make some background animation
+- [x] Make some background animation
 - [ ] Make speedometer
 
 ## If have enough time

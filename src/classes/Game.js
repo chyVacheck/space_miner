@@ -17,6 +17,7 @@ export class Game {
   constructor({
     gameOver,
     mainButton,
+    space,
     fieldId = 'game-field',
     energy,
     notification,
@@ -24,6 +25,7 @@ export class Game {
   }) {
     this.typeOfSpaceShip = typeOfSpaceShip;
     this.functionWhenGameOver = gameOver;
+    this.space = space;
     this.mainButton = mainButton;
     this.isPause = false;
     this.isGameOver = false;
@@ -159,6 +161,7 @@ export class Game {
       'click',
       this.handlerClickPilot,
     );
+    this.space.closeView();
     this.statusBars.energy.render();
   }
 
@@ -228,9 +231,10 @@ export class Game {
       setTimeout(() => {
         this.isPause = bool;
         this.asteroids.forEach((ast) => {
-          ast.htmlElement.classList.toggle('asteroid_animation-state_stop');
+          ast.htmlElement.classList.remove('asteroid_state_pause');
         });
       }, 500);
+      this.space.closeView();
       this.mainButton.htmlElement.removeEventListener('click', () => {
         this.pause();
       });
@@ -241,8 +245,9 @@ export class Game {
       });
       this.isPause = bool;
       this.asteroids.forEach((ast) => {
-        ast.htmlElement.classList.toggle('asteroid_animation-state_stop');
+        ast.htmlElement.classList.add('asteroid_state_pause');
       });
+      this.space.showView();
       this.handlerClickPilot();
     }
   }
@@ -383,7 +388,7 @@ export class Game {
       this.notification.setText(`It was good, lets try one more time`, 45);
     } else if (this.isPause) {
       this.notification.setText(
-        `When you will be ready, press space to return game`,
+        `When you will be ready, press space to return game\nAnd in the meantime, you can look at this wonderful cosmos.`,
         45,
       );
     } else {
@@ -548,7 +553,6 @@ export class Game {
 
         // spend energy
         if (this.isSpaceShipMoving) {
-          console.log('- energy');
           this.decreaseEnergy();
         }
       }
@@ -642,7 +646,6 @@ export class Game {
   decreaseEnergy() {
     if (this.energy.current > this.energy.min) {
       this.energy.current = this.statusBars.energy.decrease();
-      console.log(this.energy.current);
     }
   }
 }
