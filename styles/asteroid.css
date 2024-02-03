@@ -2,7 +2,11 @@
   width: calc(var(--size-asteroid) * var(--field-width));
   height: calc(var(--size-asteroid) * var(--field-height));
   animation-play-state: running;
-  animation: rotate var(--time-rotate) linear infinite;
+  animation: rotateAnimation var(--time-rotate) linear infinite;
+}
+
+.asteroid_type_other {
+  animation: rotateAnimation var(--time-rotate) linear infinite reverse;
 }
 
 .asteroid_state_pause {

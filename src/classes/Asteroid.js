@@ -1,7 +1,7 @@
 // ! modules
 // ? utils
 import { GAME_SETTING } from './../utils/constants.js';
-import { createId } from '../utils/utils.js';
+import { createId, getRandomNumber } from '../utils/utils.js';
 //
 export class Asteroid {
   constructor({
@@ -22,12 +22,6 @@ export class Asteroid {
       document.getElementById(`${idElement}-template`).content.cloneNode(true),
     );
 
-    this.htmlElement.id = createId('asteroid');
-    this.htmlElement.name = 'asteroid';
-    this.htmlElement.classList.add('asteroid');
-    this.htmlElement.style.setProperty('--size-asteroid', this.size);
-    this.htmlElement.style.setProperty('--time-rotate', `${this.size - 3}s`);
-
     //
     this.coordinates = {
       maxX: GAME_SETTING.FIELD.X, // ! must be the same like in field.css
@@ -35,6 +29,15 @@ export class Asteroid {
       x: coordinates.x, // number of rows
       y: coordinates.y, // number of column
     };
+
+    this.htmlElement.id = createId('asteroid');
+    this.htmlElement.name = 'asteroid';
+    this.htmlElement.classList.add('asteroid');
+    if (getRandomNumber(1, 2) % 2 === 1) {
+      this.htmlElement.classList.add('asteroid_type_other');
+    }
+    this.htmlElement.style.setProperty('--size-asteroid', this.size);
+    this.htmlElement.style.setProperty('--time-rotate', `${this.size - 3}s`);
 
     // ! console.log('asteroid is ready:', this);
 

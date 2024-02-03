@@ -35,6 +35,14 @@
   animation: rotateAnimation 64s linear infinite;
 }
 
+.orbit_planet_earth {
+  animation-duration: 64s;
+}
+
+.orbit_planet_mars {
+  animation-duration: 96s;
+}
+
 .space__obj {
   width: 100%;
   height: 100%;
