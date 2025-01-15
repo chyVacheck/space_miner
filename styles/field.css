@@ -1,8 +1,8 @@
 .field {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(205, var(--field-width));
-  grid-template-rows: repeat(130, var(--field-height));
+  grid-template-columns: repeat(530, var(--field-width));
+  grid-template-rows: repeat(320, var(--field-height));
   box-sizing: content-box;
   position: relative;
 

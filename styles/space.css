@@ -3,8 +3,8 @@
   width: 64px;
   height: 64px;
   box-sizing: border-box;
-  grid-row: 96;
-  grid-column: 103;
+  grid-row: calc(320 / 1.5);
+  grid-column: calc(530 / 2);
   position: relative;
   display: flex;
   justify-content: center;

@@ -47,14 +47,14 @@ body {
 
 #app {
   /* ? max - width */
-  --max-width-container: 1025px;
+  --max-width-container: 1060px;
 
   /* ? filed */
-  --field-width: 5px;
-  --field-height: 5px;
+  --field-width: 2px;
+  --field-height: 2px;
 
   /* ? miner ship */
-  --miner-ship-size: 5;
+  --miner-ship-size: 10;
 
   /* ? engine */
   --engine-work-color: #f44345;

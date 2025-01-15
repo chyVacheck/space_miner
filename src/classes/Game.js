@@ -188,7 +188,7 @@ export class Game {
       this.isSpaceShipMoving = false;
 
       if (
-        this.asteroids.length < 15 + Math.round(this.time / 500) &&
+        this.asteroids.length < 40 + Math.round(this.time / 500) &&
         this.time % 20 === 0
       )
         this.createAsteroid();
@@ -564,7 +564,7 @@ export class Game {
   // create a new one asteroid
   createAsteroid() {
     const size = Math.round(
-      getRandomNumberByTickTime(this.time * this.tick, 1.5),
+      getRandomNumberByTickTime((this.time * this.tick) / 1_000, 1.5),
     );
     const coordinates = {
       x: null,
@@ -598,7 +598,7 @@ export class Game {
       time: this.time,
       idElement: 'asteroid',
       size: size,
-      speed: getRandomNumberByTickTime(this.time * this.tick),
+      speed: getRandomNumberByTickTime(this.time * this.tick, 4),
       field: this.field,
       coordinates: coordinates,
     });

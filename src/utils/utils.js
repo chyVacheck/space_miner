@@ -9,12 +9,12 @@ export function createId(prefix) {
   return `${prefix}_${Math.floor(Math.random() * Date.now())}`;
 }
 
-// if less 300 then from 2 to 4
-// if more 300 then from 3 to 5
-// if more 500 then from 4 to 6
+// if less 10s then from 4 to 6
+// if more 30s then from 8 to 10
+// if more 60s then from 12 to 20
 export function getRandomNumberByTickTime(time, mul = 1) {
-  const min = time >= 500 ? 4 : time >= 300 ? 3 : 2;
-  const max = time >= 500 ? 6 : time >= 300 ? 5 : 4;
+  const min = time < 10 ? 4 : time > 30 ? 8 : 12;
+  const max = time < 10 ? 6 : time > 30 ? 10 : 20;
 
   return getRandomNumber(min, max) * mul;
 }
